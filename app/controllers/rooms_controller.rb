@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
-
+  before_action :admin_reject, except: [:index, :show]
   # GET /rooms
   # GET /rooms.json
   def index
@@ -10,6 +10,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+      
   end
 
   # GET /rooms/new
@@ -28,6 +29,7 @@ class RoomsController < ApplicationController
 
     respond_to do |format|
       if @room.save
+        session[:room] = @room.name
         format.html { redirect_to @room, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
@@ -71,4 +73,5 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:name, :place, :number)
     end
+
 end

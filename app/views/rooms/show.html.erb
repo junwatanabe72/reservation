@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%=Room.human_attribute_name('name') %>:</strong>
   <%= @room.name %>
 </p>
 
@@ -14,6 +14,29 @@
   <strong>Number:</strong>
   <%= @room.number %>
 </p>
+  <h1>会議室予約一覧</h1>
+  <p><%= link_to '予約はこちらから', new_entry_path(room_id: @room.id) %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>user_name</th>
+      <th>user_email</th>
+      <th>reserved_date</th>
+      <th>usage_time</th>
+      <th>people</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @room.entries.each do |ent| %>
+      <tr>
+        <%= render "rooms/entries",entry: ent,room: @room%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>
